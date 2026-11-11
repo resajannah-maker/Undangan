@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isi Undangan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f3ede0;
+            color: #2b2623;
+            overflow-y: auto; /* Memastikan layar bisa di-scroll sampai bawah */
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* Kartu Konten */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1.5px solid #d4a359;
+            border-radius: 14px;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        }
+
+        .judul-sambung {
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
+            color: #9c6b32;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .judul-section {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2b2623;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .teks-deskripsi {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #4a4036;
+            margin-bottom: 20px;
+        }
+
+        /* ================= BAGIAN MEMPELAI & ORANG TUA ================= */
+        .mempelai-box {
+            margin: 20px 0;
+        }
+
+        .foto-mempelai {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d4a359;
+            margin-bottom: 12px;
+        }
+
+        .nama-lengkap {
+            font-family: 'Great Vibes', cursive;
+            font-size: 34px;
+            color: #1f1a17;
+            margin-bottom: 6px;
+        }
+
+        .ortu {
+            font-size: 13px;
+            color: #5c4d3c;
+            line-height: 1.5;
+        }
+
+        .dan {
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: #d4a359;
+            margin: 15px 0;
+        }
+
+        /* ================= BAGIAN AMPLOP DIGITAL ================= */
+        .rekening-box {
+            background: #fdfbf7;
+            border: 1px solid #e0cfa9;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .nama-bank {
+            font-weight: 700;
+            font-size: 16px;
+            color: #9c6b32;
+            margin-bottom: 6px;
+        }
+
+        .no-rek {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #1f1a17;
+            margin-bottom: 4px;
+        }
+
+        .atas-nama {
+            font-size: 13px;
+            color: #5c4d3c;
+            margin-bottom: 12px;
+        }
+
+        /* ================= BAGIAN KIRIM KADO ================= */
+        .kado-box {
+            background: #fdfbf7;
+            border: 1px dashed #d4a359;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .alamat-kado {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #2b2623;
+            margin: 10px 0 15px 0;
+        }
+
+        /* Tombol Salin */
+        .btn-salin {
+            background-color: #d4a359;
+            color: #1f1a17;
+            border: none;
+            padding: 10px 22px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-salin:hover {
+            background-color: #c29047;
+        }
+
+        /* Notifikasi Berhasil Salin */
+        #toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2b2623;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        #toast.muncul { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- 1. SALAM PEMBUKA -->
+        <div class="card">
+            <h2 class="judul-sambung">Assalamu'alaikum Wr. Wb.</h2>
+            <p class="teks-deskripsi">
+                Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan acara pernikahan putra-putri kami:
+            </p>
+        </div>
+
+        <!-- 2. NAMA MEMPELAI & ORANG TUA -->
+        <div class="card">
+            <h3 class="judul-section">Mempelai</h3>
+
+            <!-- Mempelai Pria -->
+            <div class="mempelai-box">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" alt="Mempelai Pria" class="foto-mempelai">
+                <h2 class="nama-lengkap">Nama Lengkap Pria</h2>
+                <p class="ortu">
+                    Putra Pertama dari Bapak <strong>Nama Ayah Pria</strong><br>
+                    &amp; Ibu <strong>Nama Ibu Pria</strong>
+                </p>
+            </div>
+
+            <div class="dan">&amp;</div>
+
+            <!-- Mempelai Wanita -->
+            <div class="mempelai-box">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80" alt="Mempelai Wanita" class="foto-mempelai">
+                <h2 class="nama-lengkap">Nama Lengkap Wanita</h2>
+                <p class="ortu">
+                    Putri Kedua dari Bapak <strong>Nama Ayah Wanita</strong><br>
+                    &amp; Ibu <strong>Nama Ibu Wanita</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- 3. AMPLOP DIGITAL -->
+        <div class="card">
+            <h3 class="judul-section">Amplop Digital</h3>
+            <p class="teks-deskripsi">
+                Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless melalui:
+            </p>
+
+            <!-- Rekening 1 -->
+            <div class="rekening-box">
+                <p class="nama-bank">BANK BCA</p>
+                <p class="no-rek" id="rek-1">1234567890</p>
+                <p class="atas-nama">a.n. Nama Lengkap Pria</p>
+                <button class="btn-salin" onclick="salinTeks('rek-1', 'Nomor rekening BCA berhasil disalin!')">📋 Salin Nomor Rekening</button>
+            </div>
+
+            <!-- Rekening 2 / E-Wallet -->
+            <div class="rekening-box">
+                <p class="nama-bank">DANA / GOPAY</p>
+                <p class="no-rek" id="rek-2">081234567890</p>
+                <p class="atas-nama">a.n. Nama Lengkap Wanita</p>
+                <button class="btn-salin" onclick="salinTeks('rek-2', 'Nomor DANA berhasil disalin!')">📋 Salin Nomor E-Wallet</button>
+            </div>
+        </div>
+
+        <!-- 4. KIRIM KADO FISIK -->
+        <div class="card">
+            <h3 class="judul-section">Kirim Kado</h3>
+            <p class="teks-deskripsi">
+                Bagi Bapak/Ibu/Saudara/i yang ingin mengirimkan tanda kasih berupa kado fisik, dapat dikirimkan ke alamat berikut:
+            </p>
+
+            <div class="kado-box">
+                <strong>Penerima: Nama Lengkap Wanita / Pria</strong>
+                <p style="font-size: 13px; margin-top: 4px; color: #5c4d3c;">No. HP: 0812-3456-7890</p>
+                <p class="alamat-kado" id="alamat-pengiriman">
+                    Jl. Contoh Alamat Lengkap No. 123, RT 01/RW 02, Kelurahan Contoh, Kecamatan Contoh, Kota/Kabupaten, Kode Pos 12345
+                </p>
+                <button class="btn-salin" onclick="salinTeks('alamat-pengiriman', 'Alamat pengiriman kado berhasil disalin!')">📍 Salin Alamat Kado</button>
+            </div>
+        </div>
+
+        <!-- PENUTUP -->
+        <div class="card">
+            <h2 class="judul-sambung">Terima Kasih</h2>
+            <p class="teks-deskripsi" style="margin-bottom: 0;">
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Notifikasi Pop-up saat tombol salin diklik -->
+    <div id="toast">Teks berhasil disalin!</div>
+
+    <script>
+        function salinTeks(idElemen, pesanNotif) {
+            const teks = document.getElementById(idElemen).innerText;
+            navigator.clipboard.writeText(teks).then(() => {
+                const toast = document.getElementById('toast');
+                toast.textContent = pesanNotif;
+                toast.classList.add('muncul');
+                setTimeout(() => {
+                    toast.classList.remove('muncul');
+                }, 2500);
+            }).catch(() => {
+                alert("Berhasil disalin: " + teks);
+            });
+        }
+    </script>
+
+</body>
+</html>
