@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f3ede0;
+            overflow: hidden; /* Halaman utama tidak scroll, yang scroll adalah halaman 2 */
+        }
+
+        /* ================= LAYAR AWAL (COVER) ================= */
+        #layar-awal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #f3ede0;
+            background-image: radial-gradient(circle at top right, rgba(212, 163, 89, 0.25) 0%, transparent 50%),
+                              radial-gradient(circle at bottom left, rgba(212, 163, 89, 0.25) 0%, transparent 50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            z-index: 99;
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        }
+
+        #layar-awal.terbuka {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Ornamen Awan & Wayang (SVG Online-Ready) */
+        .awan-atas { position: absolute; top: 0; left: 0; width: 170px; opacity: 0.85; pointer-events: none; }
+        .awan-bawah { position: absolute; bottom: 0; right: 0; width: 190px; opacity: 0.85; pointer-events: none; }
+        .wayang-kiri { position: absolute; bottom: 0; left: 0; width: 140px; opacity: 0.85; pointer-events: none; }
+
+        .konten-cover { position: relative; z-index: 2; max-width: 400px; width: 100%; }
+        .subtitle { font-size: 14px; letter-spacing: 1px; margin-bottom: 18px; color: #3d352e; }
+
+        .bingkai-foto {
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            overflow: hidden;
+            border: 3px solid #d4a359;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #e6dccb;
+        }
+        .bingkai-foto img { width: 100%; height: 100%; object-fit: cover; }
+
+        .nama-pengantin {
+            font-family: 'Great Vibes', cursive;
+            font-size: 46px;
+            font-weight: 400;
+            color: #1f1a17;
+            margin-bottom: 10px;
+        }
+
+        .teks-hormat {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #4a4036;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+
+        .kepada { font-size: 13px; color: #3d352e; margin-bottom: 4px; }
+        .nama-tamu { font-size: 16px; font-weight: 600; color: #1f1a17; margin-bottom: 24px; }
+
+        .btn-buka {
+            background-color: #d4a359;
+            color: #1f1a17;
+            border: none;
+            padding: 13px 45px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 163, 89, 0.4);
+            transition: 0.3s;
+        }
+        .btn-buka:hover { background-color: #c29047; }
+
+        /* ================= WADAH HALAMAN 2 (IFRAME) ================= */
+        #frame-halaman-2 {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ================= TOMBOL MUSIK MELAYANG ================= */
+        .btn-musik {
+            position: fixed;
+            bottom: 22px; right: 22px;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background-color: #d4a359;
+            color: #fff;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .putar { animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO UTAMA (Tetap nyala terus meski pindah ke halaman 2) -->
+    <audio id="musik-latar" loop autoplay>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- TOMBOL KONTROL MUSIK -->
+    <button id="tombol-musik" class="btn-musik putar" title="Musik">🎵</button>
+
+    <!-- ================= KONTEN LAYAR AWAL (KODING 1) ================= -->
+    <div id="layar-awal">
+        <!-- Ornamen Mega Mendung Atas -->
+        <svg class="awan-atas" viewBox="0 0 200 120" fill="#b88446">
+            <path d="M0,0 L160,0 C140,30 110,20 90,40 C70,60 40,40 20,70 C10,85 0,90 0,90 Z" opacity="0.7"/>
+            <circle cx="50" cy="30" r="25" fill="#9c6b32" opacity="0.6"/>
+        </svg>
+
+        <!-- Siluet Wayang Kiri Bawah -->
+        <svg class="wayang-kiri" viewBox="0 0 150 220" fill="#2b1e16">
+            <path d="M40,220 L45,130 C25,115 20,85 45,65 C40,45 55,20 75,10 C80,35 70,50 85,65 C105,80 100,115 80,130 L90,220 Z" opacity="0.85"/>
+            <path d="M85,80 L130,180 L125,185 L80,85 Z" fill="#b88446"/>
+        </svg>
+
+        <!-- Ornamen Mega Mendung Bawah -->
+        <svg class="awan-bawah" viewBox="0 0 200 120" fill="#b88446">
+            <path d="M200,120 L40,120 C60,90 90,100 110,80 C130,60 160,80 180,50 C190,35 200,30 200,30 Z" opacity="0.7"/>
+            <circle cx="150" cy="90" r="28" fill="#9c6b32" opacity="0.6"/>
+        </svg>
+
+        <div class="konten-cover">
+            <p class="subtitle">We Invite You To</p>
+
+            <div class="bingkai-foto">
+                <!-- Ganti link gambar di bawah dengan foto Anda -->
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80" alt="Foto Mempelai">
+            </div>
+
+            <h1 class="nama-pengantin">Nama Pria &amp; Nama Wanita</h1>
+
+            <p class="teks-hormat">
+                Tanpa Mengurangi Rasa Hormat, Kami Mengundang Bapak/Ibu/Saudara/i untuk Hadir di Acara Kami.
+            </p>
+
+            <p class="kepada">Kepada</p>
+            <p class="nama-tamu" id="nama-tamu">Tamu Undangan</p>
+
+            <button class="btn-buka" id="btn-buka">Buka Undangan</button>
+        </div>
+    </div>
+
+    <!-- ================= MEMUAT KODING 2 (halaman2.html) ================= -->
+    <iframe id="frame-halaman-2" src="halaman2.html"></iframe>
+
+    <script>
+        const musik = document.getElementById('musik-latar');
+        const btnMusik = document.getElementById('tombol-musik');
+        const btnBuka = document.getElementById('btn-buka');
+        const layarAwal = document.getElementById('layar-awal');
+        let sedangPutar = false;
+
+        function nyalakanMusik() {
+            musik.play().then(() => {
+                sedangPutar = true;
+                btnMusik.classList.add('putar');
+                btnMusik.innerHTML = '🎵';
+            }).catch(() => {
+                sedangPutar = false;
+                btnMusik.classList.remove('putar');
+                btnMusik.innerHTML = '🔇';
+            });
+        }
+
+        // 1. Coba nyalakan musik otomatis saat layar awal dibuka
+        window.addEventListener('load', nyalakanMusik);
+
+        // 2. Jika browser HP memblokir autoplay, sentuhan pertama di mana saja pada layar awal langsung menyalakan musik
+        layarAwal.addEventListener('click', () => {
+            if (!sedangPutar) nyalakanMusik();
+        });
+
+        // 3. Klik tombol "Buka Undangan" -> Masuk ke halaman 2 & musik tetap nyala tanpa putus
+        btnBuka.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!sedangPutar) nyalakanMusik();
+            layarAwal.classList.add('terbuka');
+        });
+
+        // 4. Tombol kontrol musik manual
+        btnMusik.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (sedangPutar) {
+                musik.pause();
+                sedangPutar = false;
+                btnMusik.classList.remove('putar');
+                btnMusik.innerHTML = '🔇';
+            } else {
+                nyalakanMusik();
+            }
+        });
+
+        // 5. Nama tamu otomatis dari URL (?to=Nama+Tamu)
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('to')) {
+            document.getElementById('nama-tamu').textContent = params.get('to');
+        }
+    </script>
+</body>
+</html>
